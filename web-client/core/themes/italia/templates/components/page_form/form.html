@@ -57,6 +57,7 @@
 
 
         {% if  handle_global_change %}
+
             function {{ model }}_eval_change(elm) {
                 if (!$(elm).data("no_change") && elm.id) {
                     let obj = jsonForm("{{ model }}");
@@ -67,7 +68,7 @@
                     if (obj) {
                         execute_ajax(
                             "POST", "/client/change/{{ model }}/{{  rec_name }}?field=" + key,
-                            obj, "global_progress_loader", "{{ model }}"
+                            obj, "global_progress_loader", "{{ model }}", false
                         );
 
                     }
@@ -82,6 +83,7 @@
             })
 
 
+
             $("#{{ model }}").submit(function (e) {
                 e.preventDefault(); // save data
                 if ($("#{{ model }}").valid()) {
@@ -89,6 +91,7 @@
                     execute_ajax(
                         "POST", "{{ api_action }}", obj, "global_progress_loader", "{{ model }}", true
                     );
+
                 }
             });
 
@@ -98,6 +101,7 @@
 
                 $(document).on('change', "#{{ model }} select, input:checkbox, input:radio, input[class*='flatpickr-input']", function (e) {
                     {{ model }}_eval_change(this);
+
                 });
 
             {% endif %}

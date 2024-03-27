@@ -329,7 +329,7 @@
     }
 
     function execute_ajax(
-        req_type, req_url, obj, loader = "loader", form, nojson, callback, modal) {
+        req_type, req_url, obj, loader = "loader", form, nojson, callback, modal, callbackParam) {
         let data_to_send = JSON.stringify(obj);
         let Content_Type = "application/json";
         let is_async = true;
@@ -379,7 +379,12 @@
                     if (result.link === "#") {
                         if (callback) {
                             $("#" + loader).addClass("d-none");
-                            callback();
+                            if (callbackParam){
+                                callback(callbackParam);
+                            }else{
+                                callback();
+                            }
+
 
                         } else {
                             window.location.reload();
@@ -425,6 +430,13 @@
                             $(result[item].value).find("select, textarea, input").blur();
                             //$(result[item].selector).load(location.href + " "+ result[item].selector,"");
                         }
+                        if (callback) {
+                            if (callbackParam){
+                                callback(callbackParam);
+                            }else{
+                                callback();
+                            }
+                        }
                         if (!(result.hasOwnProperty('link'))) {
                             for (let item in result) {
                                 if (result[item].selector.includes('alert')) {
@@ -434,7 +446,7 @@
                                 }
                             }
                         }
-                        //  $(focused).focus();
+
 
                     }
 
