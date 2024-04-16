@@ -1,4 +1,4 @@
-### Table
+### Table:  
 configurable section **Api → Custom Properties**  
 **action_name→** the name (**rec_name**) of the action to use to populate the table
 **action_url→** URL of the action  **/action/{action.rec_name}**  
@@ -34,3 +34,4 @@ configurable section **Api → Custom Properties**
    </td>
  </tr>
 </table>
+
