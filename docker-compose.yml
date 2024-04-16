@@ -93,7 +93,7 @@ services:
     restart: always
 
   automation:
-    profiles: [ "all" ]
+    profiles: [ "all", "automation" ]
     stdin_open: true  # -i
     tty: true
     build:
