@@ -31,3 +31,5 @@ Check folding via **Collapsible** if set, the panel with the header, the label a
     </td>
   </tr>
 </table>
+
+[Return home](../../index.md)

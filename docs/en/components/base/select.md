@@ -40,3 +40,5 @@ this dictionary contains all the data of the record to be saved, it is therefore
 The method must return **data**, possibly modified.
 
 ![select](../../../img/componenti/base/select_img4.png "select")
+
+[Return home](../../index.md)

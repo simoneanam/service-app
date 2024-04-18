@@ -13,3 +13,5 @@ To define 2021 as default is necessary
 ![select_type_resource](../../../img/componenti/inrim_field/select_type_resource_img2.png "select_type_ resource")
 
 ![select_type_resource](../../../img/componenti/inrim_field/select_type_resource_img3.png "select_type_ resource")
+
+[Return home](../../index.md)

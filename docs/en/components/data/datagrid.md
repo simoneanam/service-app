@@ -6,3 +6,5 @@ the fields **Minimum Length , Maximum Length** in the tab **Validation** during 
 ![datagrid](../../../img/componenti/data/datagrid_img1.png "datagrid")  
 
 In the process of creating a panel **datagrid** to manage the layout of the component lines it is necessary to insert a component of type [column](../layout/columns.md#it-does-not-require-additional-configurations-if-necessary-use-the-standard-configurations) in order to define the size of the columns
+
+[Return home](../../index.md)

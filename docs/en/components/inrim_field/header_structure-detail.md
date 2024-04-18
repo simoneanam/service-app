@@ -32,3 +32,5 @@ As regards the Search Area, it is important that:
 ```
 
  Finally add the [table that will contain the rows, also activating copy and delete](../data/table.md#table) 
+
+[Return home](../../index.md)
