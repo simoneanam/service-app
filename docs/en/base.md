@@ -48,3 +48,5 @@ The list of metadata is as follows:
 
 ### Icons 
 Regarding the icons and images available in the interfaces, refer to [official AGID guide](https://italia.github.io/bootstrap-italia/docs/utilities/icone/).
+
+[Return home](index.md)

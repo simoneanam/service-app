@@ -17,3 +17,5 @@ Oppure nel caso si voglia esportare dati di una collezzione:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**body**: {"query": {"$and": [{"active": true}]}}
 
 ![button](../../../img/componenti/base/button_img1.png "button")
+
+[torna alla home](../../index.md)

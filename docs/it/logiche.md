@@ -32,3 +32,4 @@ Per quanto riguarda le azioni è possibile gestire le sole azioni di tipo: **Pro
 
   ![logic](../img/logic_img3.png "logic")
 
+[torna alla home](index.md)

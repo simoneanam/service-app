@@ -42,3 +42,5 @@ tale dizionario contiene tutti i dati del record da salvare, è possibile quindi
 Il metodo deve ritornare **data**,  eventualmente modificato.  
 
 ![select](../../../img/componenti/base/select_img4.png "select")
+
+[torna alla home](../../index.md)

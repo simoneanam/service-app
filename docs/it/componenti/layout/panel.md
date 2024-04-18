@@ -32,3 +32,5 @@ Controllare il folding tramite **Collapsible** se impostato viene disegnato il p
 	</td>
   </tr>
 </table>
+
+[torna alla home](../../index.md)

@@ -34,3 +34,5 @@ Per quanto riguarda la Search Area e’ importante che:
 In fine aggiungere la [tabella che conterra’ le righe attivando anche copia ed elimina](../data/table.md#Table)
 
 
+
+[torna alla home](../../index.md)

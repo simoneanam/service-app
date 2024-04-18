@@ -32,3 +32,5 @@ As regards the actions, it is possible to manage only the following types of act
     - with an operation **json-logic** if it fits **field_name=’{“var”:[....]}’**
     
     ![logic](../img/logic_img3.png "logic")
+
+[Return home](index.md)
