@@ -54,7 +54,7 @@ Ora proseguiamo creando un nuovo Form
                             "'}"
                         ]
                        }
-                     ```
+                 ```
         - **Actions**: note
             - **Action Name**: Set Value
             - **Type**: Value
