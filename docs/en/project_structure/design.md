@@ -2,7 +2,7 @@
 
 ## General
 The form and consequently model design system is based on Formio.Js.  
-For the list of available components that can be inserted on the forms, refer to [dedicated document](https://docs.google.com/document/d/1PKYR1zllAqG5Z_XPf4bFI57i9VbMiECJ0dD_PbpLWDo/edit#)  
+For the list of available components that can be inserted on the forms, refer to [dedicated document](../index.md#L8)  
 
 When creating a new Form/Resource element you can configure some basic data:  
 

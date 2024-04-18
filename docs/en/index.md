@@ -5,7 +5,7 @@
 	- [Icons](base.md#icons)  
 - [**Logic: Json-Logic**](logic.md)  
 - [**Computed Field**](computed_field.md)  
-- [**Base**](components/base/)  
+- [**Base components**](components/base/)  
 	- [Field Name](components/base/field_name.md)  
 	- [Textfield](components/base/text_field.md)  
 	- [Button](components/base/button.md)  

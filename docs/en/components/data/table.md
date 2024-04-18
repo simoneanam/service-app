@@ -27,7 +27,7 @@ configurable section **Api → Custom Properties**
       "copy_url":  action_url_copy ,<br>
       "remove_url":  action_url_remove <br><br>
       Action_url_copy, action_url_remove must be urls in the format:/action/action_name<br><br>
-      Where <b>action_name</b> it is the name field of the action that is possible Copy into the section <a href=https://docs.google.com/document/d/1eSXA8a7Gd9tm-iV7kv4eN7dPhJgc4OInUUwxjZ6DXpY/edit#bookmark=id.ci2ew347c7uv> Actions</a> for the desired action, copy and/or delete</font>
+      Where <b>action_name</b> it is the name field of the action that is possible Copy into the section <a href=../../project_structure/actions.md> Actions</a> for the desired action, copy and/or delete</font>
    </td>
    <td>
    <img src="../../../img/componenti/data/table_img1.png" alt="Panel">

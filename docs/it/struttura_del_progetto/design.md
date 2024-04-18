@@ -2,7 +2,7 @@
 ### Generale
 
 Il sistema di design dei form e di conseguenza dei model si basa su Formio.Js.  
-Per l’elenco dei componenti disponibili che si possono inserire sui form si faccia riferimento al [documento dedicato](https://docs.google.com/document/d/1PKYR1zllAqG5Z_XPf4bFI57i9VbMiECJ0dD_PbpLWDo/edit#)
+Per l’elenco dei componenti disponibili che si possono inserire sui form si faccia riferimento al [documento dedicato](../index.md#L9)
 
 Quando si crea un nuovo elemento Form/Risorsa si possono configurare alcuni dati di base:  
 

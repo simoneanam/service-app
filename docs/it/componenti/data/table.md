@@ -28,7 +28,7 @@ configurabile sezione **Api → Custom Properties**
 		Action_url_copy, action_url_remove devono essere url nel formato:
 		/action/action_name <br> <br>
 		Dove <b>action_name</b> e’ il campo name della action che e’ possibile 
-		Copiare nella sezione <a href = https://docs.google.com/document/d/1eSXA8a7Gd9tm-iV7kv4eN7dPhJgc4OInUUwxjZ6DXpY/edit#bookmark=id.ci2ew347c7uv>Azioni</a href> per l’azione desiderata, copia e/o elimina</font>
+		Copiare nella sezione <a href = ../../struttura_del_progetto/azioni.md>Azioni</a href> per l’azione desiderata, copia e/o elimina</font>
 	</td>
 	<td>
   	<img src="../../../img/componenti/data/table_img1.png" alt="Panel">
