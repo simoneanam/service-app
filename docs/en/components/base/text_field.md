@@ -4,3 +4,5 @@ Input text field. In addition to [standard configurations](../../base.md#the-fol
 ![textfield](../../../img/componenti/base/textfield_img1.png "textfield")
 
 
+
+[Return home](../../index.md)

@@ -7,3 +7,5 @@ Creates a link tag on the form, extends htmlelement. In addition to the [standar
 - **Icon: →** default no image, or a choice of [available icons](../../base.md#icons) 
 
 ![link](../../../img/componenti/layout/link_img1.png "link")
+
+[Return home](../../index.md)

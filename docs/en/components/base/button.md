@@ -17,3 +17,5 @@ Or if you want to export data from a collection:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**body:** {"query": {"$and": [{"active": true}]}}  
 
 ![button](../../../img/componenti/base/button_img1.png "button")
+
+[Return home](../../index.md)

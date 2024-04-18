@@ -4,3 +4,5 @@ Implement [standard configurations](../../base.md#the-following-properties-are-m
 By default a Field Number is defined as **Integer**  
 If you want to define a field **Float** the checkbox must be ticked **Require Decimal** in the TAB  
 **Data** of the field configurator in the design phase.  
+
+[Return home](../../index.md)

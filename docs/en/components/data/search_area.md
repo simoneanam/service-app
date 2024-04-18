@@ -11,3 +11,5 @@ Requires configuration; it is the component that is used in all form list views.
 
 ![search_area](../../../img/componenti/data/search_area_img1.png "search_area")
 
+
+[Return home](../../index.md)
