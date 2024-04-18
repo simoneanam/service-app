@@ -35,3 +35,5 @@ configurabile sezione **Api → Custom Properties**
 	</td>
   </tr>
 </table>
+
+[torna alla home](../../index.md)

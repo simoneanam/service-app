@@ -7,3 +7,5 @@ E’ possibile configurare il componente content i tre modalità:
 - Attivare il rendering dei contenuti inseriti nell’editor del configuratore, inserendo la configurazione “**eval_tmp**” nel configuratore nella sezione **API → Custom Properties** => key: **eval_tmp**, value: **si**  
 
   ![content](../../../img/componenti/layout/content_img1.png "content")
+
+[torna alla home](../../index.md)

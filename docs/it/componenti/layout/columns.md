@@ -3,3 +3,5 @@ Non necessita di configurazioni aggiuntive; se necessario usare le [configurazio
 
 E’ possibile controllare il render della label del componente spuntando il checkbox **Hide Label**  
 Il valore label **non** viene renderizzato se il valore in design e’ :**Columns**
+
+[torna alla home](../../index.md)
