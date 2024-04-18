@@ -5,3 +5,5 @@ Per attivare la possibilità  di aggiungere più righe in un datagrid è necessa
 ![datagrid](../../../img/componenti/data/datagrid_img1.png "datagrid")
 
 In fase di creazione di una pannello **datagrid** per gestire il layout delle righe del componente e’ necessario inserire nel componente, prima di ogni altro componente per la gestione di dati un componente di tipo [column](../layout/columns.md#Columns) in modo da definire la dimensione delle colonne
+
+[torna alla home](../../index.md)

@@ -15,3 +15,5 @@ Il valore del campo ‘anno’  (il nome si legge nel tab API) **form.anno** dev
 
 ![select_type_resource](../../../img/componenti/inrim_field/select_type_resource_img3.png "select_type_ resource")
 
+
+[torna alla home](../../index.md)

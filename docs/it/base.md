@@ -52,6 +52,7 @@ aggiunge il  campo; si veda la documentazione specifica dei componenti
 ### Icone  
 Per quanto riguarda le icone e le immagini disponibili nelle interfacce fare riferimento alla [guida ufficiale AGID.](https://italia.github.io/bootstrap-italia/docs/utilities/icone/)
 
+[torna alla home](index.md)
 
 
 
