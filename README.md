@@ -10,6 +10,8 @@ Service App is a project and framework designed to
 - available plugin class system to build your own backend and/or frontend custom service
 - documentation for plugin development is in WIP
 
+Read the complete [Documentations ](docs/index.md)
+
 ### TODO
 
 - i18n
