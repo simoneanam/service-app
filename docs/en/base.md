@@ -3,7 +3,7 @@
 All components in the builder are or are derived from the default components of [Formio.js](https://formio.github.io/formio.js/app/builder)  
 The system integrates this tool for creating Drag&Drop forms and makes them available to the user in the form of an App with [graphics adhering to AGID guidelines](https://italia.github.io/bootstrap-italia/docs/come-iniziare/introduzione/)  
 Not all the features of Formio.js have been managed but only those useful for the purpose of the project.  
-As regards the basic functionality of the project, see [general documentation of the application](https://docs.google.com/document/d/1eSXA8a7Gd9tm-iV7kv4eN7dPhJgc4OInUUwxjZ6DXpY/edit#)  
+As regards the basic functionality of the project, see [general documentation of the application](index.md#L60)  
 
 ## **Metadata**  
 Metadata is data present in each model (form) and is automatically enhanced when creating/modifying a form record.
