@@ -7,8 +7,9 @@ import pathlib
 logger = logging.getLogger(__name__)
 
 sys.path.append(pathlib.Path(__file__).parent.resolve())
-
-for name_app in get_settings().depends:
+_settings = get_settings()
+logger.info(f" install APP: {_settings.module_name}")
+for name_app in _settings.depends:
     try:
         logger.info(f"import app: {name_app}")
         sys.path.append(name_app)
