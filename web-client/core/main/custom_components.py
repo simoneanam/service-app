@@ -707,7 +707,7 @@ class selectComponent(CustomComponent):
                     "<span>{{ item.label }}</span>"
                 )
             if self.dataSrc == "custom" and not self.idPath:
-                self.idPath = "rec_name"
+                self.idPath = "id"
             if self.raw.get("data") and self.raw.get("data").get("resource"):
                 self.resource_id = self.raw.get("data") and self.raw.get(
                     "data"
