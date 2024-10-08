@@ -971,6 +971,8 @@ class buttonComponent(CustomComponent):
         )
         if cfg.get("modalEdit"):
             self.component_tmp = "modalbutton"
+        if cfg.get("export"):
+            self.component_tmp = "exportbutton"
         return cfg
 
 
@@ -1012,8 +1014,8 @@ class datetimeComponent(CustomComponent):
         self.headers = []
         self.is_date = self.raw.get("enableDate", True)
         self.is_time = self.raw.get("enableTime", True)
-        self.min = self.raw["widget"]["minDate"]
-        self.max = self.raw["widget"]["maxDate"]
+        self.min = self.raw["widget"].get("minDate")
+        self.max = self.raw["widget"].get("maxDate")
         # self.client_format = self.builder.settings['ui_date_mask']
         self.format = self.raw["format"]
         self.value_date = None

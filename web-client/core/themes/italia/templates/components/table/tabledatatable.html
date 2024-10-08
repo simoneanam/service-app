@@ -99,7 +99,7 @@
         paging: true,
         searching: false,
         fixedHeader: true,
-        columns:{{ columns|tojson|safe }},
+        columns: {{ columns|tojson|safe }},
         ajax: get_ajax_data_table(),
         {% if tab_responsive %}
             responsive: true,
@@ -138,7 +138,7 @@
             },
         {% endif %}
         {% if order %}
-            order:{{ order|tojson|safe }},
+            order: {{ order|tojson|safe }},
         {% endif %}
         dom: '{{ dom_todo }}',
         initComplete: function () {
@@ -283,6 +283,8 @@
                     if (cell_clicked === undefined) {
                         let data = $('#{{ tab_id }}').DataTable().row($(this).children('ul').data('dtrIndex')).data();
                         {{ tab_id }}_open_form(data['{{ click_row["col"] }}']);
+                    } else {
+                        {{ tab_id }}_open_form(cell_clicked['{{ click_row["col"] }}']);
                     }
 
                 {% else %}
