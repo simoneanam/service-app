@@ -30,14 +30,14 @@ SUBMIT_LABELS = {"new": "Salva", "update": "Aggiorna"}
 class FormIoWidgetBase(FormIoWidget, PageWidget):
     @classmethod
     def create(
-        cls,
-        templates_engine,
-        session,
-        request,
-        settings,
-        content,
-        schema={},
-        **kwargs,
+            cls,
+            templates_engine,
+            session,
+            request,
+            settings,
+            content,
+            schema={},
+            **kwargs,
     ):
         self = FormIoWidgetBase()
         self.content = deepcopy(content)
@@ -90,7 +90,7 @@ class FormIoWidgetBase(FormIoWidget, PageWidget):
         self.rec_name = self.rec_name
         self.sys_component = self.schema.get("sys")
         self.handle_global_change = (
-            int(self.schema.get("handle_global_change", 0)) == 1
+                int(self.schema.get("handle_global_change", 0)) == 1
         )
         self.no_cancel = int(self.schema.get("no_cancel", 0)) == 1
         self.init_data = data.copy()
@@ -317,3 +317,10 @@ class FormIoWidgetBase(FormIoWidget, PageWidget):
             except ValueError as e:
                 return False
         return str_test
+
+    def pre_process_data(self, data):
+        self.init_form(data)
+        self.builder.compute_data()
+        sub_data = self.builder.main.form_data.copy()
+        self.init_form(data)
+        return sub_data
