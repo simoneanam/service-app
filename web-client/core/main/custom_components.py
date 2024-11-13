@@ -1648,11 +1648,10 @@ class datagridComponent(CustomComponent):
             if k.startswith(f"{self.key}_dataGridRow_")
         }
         if datas:
-            # external_proxy_uri_configs _dataGridRow_ 0 _ domain
             d_res = {}
             for k, v in datas.items():
                 base = k.split("_dataGridRow_")
-                id_and_field = base[1].split("_")
+                id_and_field = base[1].split("_", 1)
                 if not d_res.get(id_and_field[0]):
                     d_res[id_and_field[0]] = {}
                 d_res[id_and_field[0]].update({id_and_field[1]: v})

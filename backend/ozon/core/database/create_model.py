@@ -5,7 +5,7 @@ from typing import Optional, List
 
 from pydantic import create_model
 
-from .mongodb.base_model import BasicModel
+from .mongodb.base_model import BasicModel, BaseModel
 from .mongodb.bson_types import *
 
 logger = logging.getLogger(__name__)
@@ -32,9 +32,10 @@ default_list_metadata = [
 
 
 class ModelMaker:
-    def __init__(self, model_name: str, components: list):
+    def __init__(self, model_name: str, components: list, model=BasicModel):
         self.components = components[:]
         self.model_name = model_name
+        self.use_model = model
         self.unique_fields = ["rec_name"]
         self.model = None
         self.no_create_model_field_key = [
@@ -53,7 +54,8 @@ class ModelMaker:
         self.no_clone_field_keys = {}
         self.computed_fields = {}
         self.create_task_action = {}
-        self.create_model_to_nesteded = ["datagrid", "table"]
+        self.create_model_to_nesteded = ["table"]
+        self.create_model_to_nesteded_base = ["datagrid"]
         self.linked_object = []
         self.mapper = {
             "textfield": [str, ""],
@@ -78,7 +80,7 @@ class ModelMaker:
 
     def make_model(self, fields_def):
         self.model = create_model(
-            self.model_name, __base__=BasicModel, **fields_def
+            self.model_name, __base__=self.use_model, **fields_def
         )
         logger.debug(f"Make model {self.model_name}... Done")
 
@@ -113,6 +115,16 @@ class ModelMaker:
                     List[
                         ModelMaker(
                             comp.get("key"), comp.get("components")[:]
+                        ).model
+                    ],
+                    [],
+                )
+            if comp.get("type") in self.create_model_to_nesteded_base:
+                dict_t[comp.get("key")] = (
+                    List[
+                        ModelMaker(
+                            comp.get("key"), comp.get("components")[:],
+                            model=BaseModel
                         ).model
                     ],
                     [],

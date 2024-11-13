@@ -645,9 +645,12 @@ class ContentServiceBase(ContentService):
             }
             return False, err
 
-        await run_in_threadpool(lambda: page.init_form(submit_data))
+
+        sub_data = await run_in_threadpool(
+            lambda: page.pre_process_data(submit_data))
+
         await self.eval_data_src_componentes(
-            page.components_ext_data_src, data=submitted_data
+            page.components_ext_data_src, data=sub_data
         )
 
         return True, await run_in_threadpool(
