@@ -56,6 +56,7 @@ class ModelMaker:
         self.create_task_action = {}
         self.create_model_to_nesteded = ["table"]
         self.create_model_to_nesteded_base = ["datagrid"]
+        self.create_model_to_nesteded_all = ["table", "datagrid"]
         self.linked_object = []
         self.mapper = {
             "textfield": [str, ""],
@@ -153,12 +154,12 @@ class ModelMaker:
                 "action_type"
         ):
             self.create_task_action[comp.get("key")] = comp.get("properties")
-        if comp.get("columns"):
+        if comp.get("columns") and not comp.get("type") in self.create_model_to_nesteded_all:
             for col in comp.get("columns"):
                 if col.get("components"):
                     for x in col.get("components"):
                         self._scan(x.copy(), dict_t)
-        if comp.get("components"):
+        if comp.get("components") and not comp.get("type") in self.create_model_to_nesteded_all:
             for c in comp.get("components"):
                 if c.get("colums"):
                     for col in c.get("columns"):
