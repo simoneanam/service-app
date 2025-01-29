@@ -1,5 +1,7 @@
 # Copyright INRIM (https://www.inrim.eu)
 # See LICENSE file for full licensing details.
+import re
+
 import httpx
 import logging
 import ujson
@@ -146,6 +148,11 @@ class ImportService(MailService):
                 f"/resource/data/{data_model}?fields={','.join(model_fields_names)}"
             )
             data = data_res.get("content", {}).get("data", {})
+            for rec in data:
+                r_components = rec.get("components")
+                if r_components:
+                    rec["components"] = re.sub(r"\s*(:|,)\s*", r"\1", str(r_components))
+
         file_name = f"{data_model}_{dt_report}.xlsx"
         df = pd.DataFrame(data, columns=model_fields_names)
         buffer = BytesIO()
