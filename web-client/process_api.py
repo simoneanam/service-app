@@ -30,8 +30,16 @@ async def start_process(
 ):
     params = request.query_params.__dict__["_dict"].copy()
     update_data = False
+    run_and_forget = False
+    # commit form data in database befor strat process
     if params.get("update_data"):
         update_data = True
+
+    # if  run a process external
+    if params.get("run_and_forget"):
+        run_and_forget = True
+
+    print(f"params: {params} - update_data: {update_data} - run_and_forget: {run_and_forget}")
 
     gateway = Gateway.new(
         request=request, settings=get_settings(), templates=templates
@@ -59,7 +67,8 @@ async def start_process(
         process_model=process_model,
         process_name=process_name,
     )
-    await process_service.start(form_data=data, update_data=update_data)
+    await process_service.start(
+        form_data=data, update_data=update_data, run_and_forget=run_and_forget)
     response = await process_service.check_process_status(
         process_service.process_instance_id
     )

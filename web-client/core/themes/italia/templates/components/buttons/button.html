@@ -42,7 +42,7 @@
                     let key = clean_key_id(this.id);
                     if (obj) {
                         execute_ajax(
-                            "POST", "{{ url_action }}/{{  rec_name }}?field=" + key,
+                            "POST", "{{ url_action |safe}}/{{  rec_name }}?field=" + key,
                             obj, "global_progress_loader", "{{ model }}"
                         );
 
@@ -72,7 +72,7 @@
                     if ($("#{{ model }}").valid()) {
                         let obj = dataForm("{{ model }}");
                         execute_ajax(
-                            "POST", "{{ url_action }}", obj, "automation_progress_loader", "{{ model }}", true
+                            "POST", "{{ url_action | safe }}", obj, "automation_progress_loader", "{{ model }}", true
                             {% if modal_form %}, parent.close_me {% endif %}
                         );
                     }

@@ -38,7 +38,7 @@
                 {% if  open_modal %}
                     obj = {
                         "related_action": {
-                            "url": "{{ url_action }}",
+                            "url": "{{ url_action | safe}}",
                             "todo": "{{todo}}",
                             "default_fields": "{{ default_fields |json }}"
                         }
@@ -46,8 +46,7 @@
                 {% else %}
                     $("#{{ key }}_btn_id").on('click', function (e) {
                         e.preventDefault(); // disable the POST of the form by the submit button
-                        execute_ajax("{{ btn_action_type }}", "{{ url_action }}", obj);
-
+                        execute_ajax("{{ btn_action_type }}", "{{ url_action | safe}}", obj);
                     });
                 {% endif %}
             {% endif %}

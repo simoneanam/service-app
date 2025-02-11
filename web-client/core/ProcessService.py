@@ -1,20 +1,14 @@
 # Copyright INRIM (https://www.inrim.eu)
 # See LICENSE file for full licensing details.
-import json
 import sys
 from typing import Optional
 
-from fastapi import FastAPI, Request, Header, HTTPException, Depends
-from fastapi.responses import RedirectResponse, FileResponse
 import httpx
 import logging
-import ujson
-from datetime import datetime, timedelta
 from fastapi.concurrency import run_in_threadpool
 from aiopath import AsyncPath
 from .main.base.base_class import PluginBase
 from .ContentService import ContentService
-import aiofiles
 import uuid
 
 logger = logging.getLogger(__name__)
@@ -31,14 +25,14 @@ class ProcessService(PluginBase):
 class ProcessServiceBase(ProcessService):
     @classmethod
     def create(
-        cls, content_service: ContentService, process_model, process_name
+            cls, content_service: ContentService, process_model, process_name
     ):
         self = ProcessServiceBase()
         self.init(content_service, process_model, process_name)
         return self
 
     def init(
-        self, content_service: ContentService, process_model, process_name
+            self, content_service: ContentService, process_model, process_name
     ):
         self.content_service = content_service
         self.gateway = content_service.gateway
@@ -63,6 +57,7 @@ class ProcessServiceBase(ProcessService):
         self.current_task_vars = {}
         self.form_data = {}
         self.update_data = False
+        self.run_and_forget = False
 
     async def load_config(self):
         self.process_data = await self.gateway.get_record_data(

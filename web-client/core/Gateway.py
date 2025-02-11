@@ -49,9 +49,14 @@ class GatewayBase(Gateway):
         self.init_headers_and_token()
 
     @classmethod
+    def query_params_only(cls, qstring) -> QueryParams:
+        qstring = qstring.replace("&amp;", "&")
+        return QueryParams(qstring)
+
+    @classmethod
     def query_params(cls, url) -> QueryParams:
         qstring = url.split("?")[1] if "?" in url else ""
-        return QueryParams(qstring)
+        return GatewayBase.query_params_only(qstring)
 
     def clean_form(self, form_data):
         # logger.info(f"{form_data}")

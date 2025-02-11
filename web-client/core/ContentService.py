@@ -4,10 +4,10 @@ import json
 
 import pdfkit
 from aiopath import AsyncPath
-from core.cache.cache import get_cache
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse
 
+from core.cache.cache import get_cache
 from .FormIoBuilder import FormIoBuilder
 from .main.base.base_class import PluginBase
 from .main.base.utils_for_service import *
@@ -645,7 +645,6 @@ class ContentServiceBase(ContentService):
             }
             return False, err
 
-
         sub_data = await run_in_threadpool(
             lambda: page.pre_process_data(submit_data))
 
@@ -665,7 +664,8 @@ class ContentServiceBase(ContentService):
 
     async def form_post_complete_response(self, response_data, response):
         logger.info(f"form post complete make response")
-        if "error" in response_data.get("status", ""):
+        if response_data.get("status", "") in ["error", "warning", "success"]:
+            act_type = response_data.get("status", "")
             widget = WidgetsBase.create(
                 templates_engine=self.templates,
                 session=self.session,
@@ -673,11 +673,11 @@ class ContentServiceBase(ContentService):
             )
             if self.gateway.session["app"].get("act_builder"):
                 return widget.response_ajax_notices(
-                    "error", f"builder_alert", response_data["message"]
+                    act_type, f"builder_alert", response_data["message"]
                 )
             else:
                 return widget.response_ajax_notices(
-                    "error",
+                    act_type,
                     f"{response_data['model']}_alert",
                     response_data["message"],
                 )

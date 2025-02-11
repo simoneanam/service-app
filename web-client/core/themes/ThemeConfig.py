@@ -140,3 +140,21 @@ class ThemeConfigBase(ThemeConfig):
 
         to_update["selector"] = selector
         return to_update.copy()
+
+    def get_update_alert_success(self, selector, message, cls=""):
+        to_update = {}
+
+        cfg = {
+            "success": True,
+            "message": message,
+            "cls": " mx-auto mt-n5 ",
+            "name": selector,
+        }
+        if not "#" in selector and not "." in selector:
+            selector = "#" + selector
+        if cls:
+            cfg["cls"] = cls
+        to_update["value"] = self.get_form_alert(cfg)
+
+        to_update["selector"] = selector
+        return to_update.copy()

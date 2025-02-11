@@ -151,7 +151,7 @@ class WidgetsBase:
             dat_update["value"],
         )
         to_update["selector"] = dat_update["selector"]
-        to_update["status"] = "error"
+        to_update["status"] = resp_type
         list_res.append(to_update)
         return list_res
 
