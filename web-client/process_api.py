@@ -96,7 +96,7 @@ async def complete_task(
         process_name=process_act_name,
     )
     response = await process_service.complete(
-        form_data=submitted_data, update_data=True
+        form_data=submitted_data, update_data=True, run_and_forget=False
     )
     return response
 
