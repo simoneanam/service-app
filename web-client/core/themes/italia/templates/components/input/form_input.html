@@ -1,6 +1,8 @@
-<div class="form-group {% if hidden %} d-none {% endif %} {{ customClass }}" id="{{ key }}">
+<div class="form-group {% if hidden %} d-none {% endif %} {{ customClass }}"
+     id="{{ key }}">
     <div class="input-group">
-        <input type="text" class="form-control {% if case %} text-{{ case }} {% endif %} "
+        <input type="text"
+               class="form-control {% if case %} text-{{ case }} {% endif %} "
                autocomplete="off"
                value="{% if value %}{{ value | safe }}{% endif %}"
                id="{{ key }}_in"
@@ -13,9 +15,11 @@
                 {% if disabled %} disabled {% endif %}
                 {% if inputMask %}
                     {% if inputMask in ['mac', 'ip', 'date', 'euro', 'numericit', 'sci', 'mail', 'currency', 'euroComplex', 'numeric', 'url'] %}
-               data-inputmask="'alias': '{{ inputMask }}'" data-inputmask-clearincomplete="true"
+               data-inputmask="'alias': '{{ inputMask }}'"
+               data-inputmask-clearincomplete="true"
                     {% else %}
-               data-inputmask="'mask': '{{ inputMask }}'" data-inputmask-clearincomplete="true"
+               data-inputmask="'mask': '{{ inputMask }}'"
+               data-inputmask-clearincomplete="true"
                     {% endif %}
                 {% endif %}
         >
@@ -36,13 +40,62 @@
         {% endif %}
     </div>
     {% if desc %}
-        <small class="form-text text-muted">{{ desc | safe}}</small>
+        <small class="form-text text-muted">{{ desc | safe }}</small>
     {% endif %}
 </div>
 <script>
     {% if inputMask %}
         $(document).ready(function () {
             $('#{{ key }}_in').inputmask();
+        });
+    {% endif %}
+    {% if search_table  %}
+        let keys_{{ key }} = "{{ search_fields }}";
+        let originalQuery_{{ key }} = false;
+        let valore_{{ key }} = localStorage.getItem('{{ key }}_in');
+
+        function appendToAnd(queryp, chiavi, valore) {
+            let query = JSON.parse(JSON.stringify(queryp));
+            if (!query.$and) {
+                query.$and = [];
+            }
+
+            let chiaviArray = chiavi.split(",");
+            let orItem = {$or: []};
+
+            chiaviArray.forEach(function (chiave) {
+                let item = {};
+                item[chiave.trim()] = {$regex: valore, $options: "i"};
+                orItem.$or.push(item);
+            });
+
+            query.$and.push(orItem);
+            return query;
+        }
+
+        $(document).ready(function () {
+            $('#{{ key }}_in').on('input', function (e) {
+                if (originalQuery_{{ key }} === false) {
+                    console.log("aggiorno original");
+                    originalQuery_{{ key }} = JSON.parse(JSON.stringify({{ search_table }}_query));
+                }
+                localStorage.setItem('{{ key }}_in', this.value);
+                let search_table_query = {...originalQuery_{{ key }}};
+                e.preventDefault();
+                console.log("search " + this.value + " originalQuery:" + JSON.stringify(originalQuery_{{ key }}));
+                if (this.value.trim() === "") {
+                    {{ search_table }}_query = search_table_query;
+                } else {
+                    {{ search_table }}_query = appendToAnd(search_table_query, keys_{{ key }}, this.value);
+                }
+                $('#{{ search_table }}').DataTable().search(this.value).draw(false);
+            });
+
+            if (valore_{{ key }} !== null) {
+                // Il valore esiste, quindi puoi usarlo
+                $('#{{ key }}_in').val(valore_{{ key }}); // Usa .val() per impostare il valore
+                $('#{{ key }}_in').trigger("input");
+            }
         });
     {% endif %}
 </script>

@@ -93,7 +93,6 @@ async def modal_action(
         if related_action.get("todo") == "new_row":
             form_data = response_data.get("data", {})
             d_fields = ujson.loads(related_action.get("default_fields", "{}"))
-            logger.info(d_fields)
             params = "&".join(
                 [f"{v}={form_data.get(k)}" for k, v in d_fields.items()])
             action_url = f"{related_action.get('url', '')}?{params}"
@@ -106,7 +105,6 @@ async def modal_action(
             url_act = submitted_data.get("url")
             model = submitted_data.get("model")
             rec_name = submitted_data.get("rec_name")
-            logger.info(submitted_data)
             if act == "copy":
                 data = await gateway.get_record_data(model, rec_name)
                 data.pop("_id")
