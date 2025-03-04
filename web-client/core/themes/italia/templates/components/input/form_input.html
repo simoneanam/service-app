@@ -8,7 +8,8 @@
                id="{{ key }}_in"
                name="{{ key }}_in"
                 {% if size %} maxlength="{{ size }}" {% endif %}
-                {% if placeholder %} placeholder="{{ placeholder }}" {% endif %}
+                {% if placeholder %}
+               placeholder="{{ placeholder }}" {% endif %}
                 {% if accept %} accept="audio/*;" capture {% endif %}
                 {% if required %} required {% endif %}
                 {% if readonly %} readonly {% endif %}
@@ -25,13 +26,16 @@
         >
 
         {% if label %}
-            <label for="{{ key }}_in">{{ label }}{% if required %} <span class="h5 text-danger">*</span>{% endif %}</label>
+            <label for="{{ key }}_in">{{ label }}{% if required %}
+                <span class="h5 text-danger">*</span>{% endif %}</label>
         {% endif %}
 
         {% if is_url %}
             <div class="input-group-append">
-                <a href="{{ value }}" class="text-decoration-none {% if hidden %} d-none {% endif %}"
-                        {% if target %} target="{{ target }}" {% else %} target="_blank"  {% endif %} >
+                <a href="{{ value }}"
+                   class="text-decoration-none {% if hidden %} d-none {% endif %}"
+                        {% if target %} target="{{ target }}" {% else %}
+                   target="_blank"  {% endif %} >
                     <svg class="icon">
                         <use href="/static/svg/sprite.svg#it-external-link"></use>
                     </svg>
@@ -42,6 +46,10 @@
     {% if desc %}
         <small class="form-text text-muted">{{ desc | safe }}</small>
     {% endif %}
+
+</div>
+<div class="z-index-1">
+    <ul class="list-group mt-n4 mb-4" style="max-height: 120px; overflow-y: auto;" id="results_{{ key }}"></ul>
 </div>
 <script>
     {% if inputMask %}
@@ -97,5 +105,71 @@
                 $('#{{ key }}_in').trigger("input");
             }
         });
+    {% elif geonames and country %}
+        $(document).ready(function () {
+            let data = [];
+            let lastQuery = "";
+
+            function fetchData(query) {
+                $.ajax({
+                    url: `{{ geonames }}?country={{ country }}&posta_code=${query}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.length > 0) {
+                            data = response;
+                            renderList(query);
+                        }
+                    },
+                    error: function () {
+                        console.error("Errore nel recupero dei dati");
+                    }
+                });
+            }
+
+            function renderList(filter = "") {
+                const filteredData = data.filter(item =>
+                    (`${item.postal_code}, ${item.place_name}, ${item.county_code}`
+                        .toLowerCase().includes(filter.toLowerCase()))
+                );
+
+                $("#results_{{ key }}").empty();
+                filteredData.forEach(item => {
+                    $("#results_{{ key }}").append(
+                        `<li class="list-group-item list-group-item-action"
+                            data-values="${JSON.stringify([item.place_name.trim(), item.county_code])
+                            .replace(/"/g, '&quot;')  // Escape per doppi apici
+                            .replace(/'/g, '&#39;')  // Escape per apici singoli
+                            }">
+               ${item.place_name}, ${item.county_code}
+        </li>`
+                    );
+                });
+            }
+
+            $("#{{ key }}_in").on("input", function () {
+                const query = $(this).val().trim();
+                $("#results_{{ key }}").empty();
+
+                if (query !== lastQuery) {
+                    lastQuery = query;
+                    fetchData(query);
+                } else {
+                    renderList(query);
+                }
+            });
+            {%  if update_fields  %}
+                $("#results_{{ key }}").on("click", "li", function () {
+                    console.log("Elemento <li> cliccato");
+                    let values = JSON.parse($(this).attr("data-values"));
+                    console.log($(this).attr("data-values"))
+                    {% for idx, value in update_fields.split(',') | enumerate  %}
+                        $("#{{ value.strip() }}_in").val(values["{{ idx }}"]);
+                    {% endfor %}
+                     $("#results_{{ key }}").empty();
+                });
+            {% endif %}
+        });
+
     {% endif %}
 </script>

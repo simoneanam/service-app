@@ -43,11 +43,14 @@ def format_currency(value):
     except Exception as e:
         return "0,0"
 
+def enumerate_filter(iterable):
+    return enumerate(iterable)
 
 templates.env.filters["cssid"] = cssid
 templates.env.filters["cssid_div"] = cssid_div
 templates.env.filters["parse_json"] = parse_json
 templates.env.filters["fcurrency"] = format_currency
+templates.env.filters["enumerate"] = enumerate_filter
 
 
 # eval settings and fill cache
