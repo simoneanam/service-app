@@ -101,6 +101,57 @@ async def complete_task(
     return response
 
 
+@process_api.post(
+    "/start-task/{process_model}/{topic}", tags=["process start single task"]
+)
+async def start_single_task(
+    request: Request, process_model: str, topic: str
+):
+    params = request.query_params.__dict__["_dict"].copy()
+    update_data = False
+    run_and_forget = False
+    if params.get("update_data"):
+        update_data = True
+    if params.get("run_and_forget"):
+        run_and_forget = True
+
+    gateway = Gateway.new(
+        request=request, settings=get_settings(), templates=templates
+    )
+    submitted_data = await gateway.load_post_request_data()
+    if isinstance(submitted_data, JSONResponse):
+        return submitted_data
+    if update_data:
+        content_service = await gateway.empty_content_service()
+        data = submitted_data
+    else:
+        content = await gateway.get_record(submitted_data.get("data_model"))
+        content["content"]["data"] = submitted_data.copy()
+
+        content_service = ContentService.new(
+            gateway=gateway, remote_data=content.copy()
+        )
+        stautus, data = await content_service.form_post_handler(submitted_data)
+        if not stautus:
+            return await content_service.form_post_complete_response(
+                data, None
+            )
+    process_service = ProcessService.new(
+        content_service=content_service,
+        process_model=process_model,
+        process_name="generic_single_task",
+    )
+    await process_service.start(
+        form_data=data, update_data=update_data,
+        run_and_forget=run_and_forget,
+        extra_vars={"target_topic": topic})
+    response = await process_service.check_process_status(
+        process_service.process_instance_id
+    )
+    logger.info(f" Process start {process_service.process_instance_id}")
+    return response
+
+
 @process_api.post("/cancel", tags=["process cancel instance"])
 async def cancell_process(request: Request):
     gateway = Gateway.new(
