@@ -61,10 +61,10 @@
             col_defs.push(chk_o)
         {% endif %}
         {% if url_action_copy %}
-
             let {{ tab_id }}_chk_c = {
-                targets: {% if url_action_remove %}
-                        -2 {%  else %} - 1 {% endif %},
+                targets: {% if url_action_remove and url_action_process %} -3
+                         {% elif url_action_remove or url_action_process %} -2
+                         {% else %} -1 {% endif %},
                 render: function (data, type, row) {
                     if (type === 'display') {
                         return '<button class="btn-xs btn-outline-dark" name="{{ tab_id }}_copy"> <svg class="icon icon-xs"><use href="/static/svg/sprite.svg#it-copy"></use></svg></button>';
@@ -78,7 +78,7 @@
         {% endif %}
         {% if url_action_remove %}
             let {{ tab_id }}_chk_d = {
-                targets: -1,
+                targets: {% if url_action_process %} -2 {% else %} -1 {% endif %},
                 render: function (data, type, row) {
                     if (type === 'display') {
                         return '<button class="btn-xs btn-outline-dark bg-danger" name="{{ tab_id }}_remove"> <svg class="icon icon-xs"><use href="/static/svg/sprite.svg#it-delete"></use></svg></button>';
@@ -89,6 +89,20 @@
                 className: "align-middle"
             };
             col_defs.push({{ tab_id }}_chk_d)
+        {% endif %}
+        {% if url_action_process %}
+            let {{ tab_id }}_chk_p = {
+                targets: -1,
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return '<button class="btn-xs {{ process_action_class }}" name="{{ tab_id }}_process"> <svg class="icon icon-xs"><use href="/static/svg/sprite.svg#{{ process_action_icon }}"></use></svg></button>';
+                    }
+                    return data;
+                },
+                orderable: false,
+                className: "align-middle"
+            };
+            col_defs.push({{ tab_id }}_chk_p)
         {% endif %}
         return col_defs;
     }
@@ -198,7 +212,7 @@
             }
         });
     {% endif %}
-    {% if url_action_copy or  url_action_remove %}
+    {% if url_action_copy or url_action_remove or url_action_process %}
         $('#{{ tab_id }} tbody').on('click', 'button', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -214,6 +228,11 @@
             {% if url_action_remove %}
                 if (e.currentTarget.name === "{{ tab_id }}_remove") {
                     {{ tab_id }}_remove_form(data.rec_name);
+                }
+            {% endif %}
+            {% if url_action_process %}
+                if (e.currentTarget.name === "{{ tab_id }}_process") {
+                    {{ tab_id }}_process_form(data.rec_name);
                 }
             {% endif %}
 
@@ -245,6 +264,24 @@
                     "action": "remove",
                     "model": "{{ model }}",
                     "rec_name": value,
+                };
+                execute_ajax(
+                    "POST", "/client/modal/action", obj, "global_progress_loader", "{{ model }}"
+                );
+            {% else %}
+                window.location.href = value;
+            {% endif %}
+        }
+    {% endif %}
+    {% if url_action_process %}
+        function {{ tab_id }}_process_form(value) {
+            {% if modal %}
+                let obj = {
+                    "action": "process",
+                    "model": "{{ model }}",
+                    "rec_name": value,
+                    "process_topic": "{{ process_action_topic }}",
+                    "process_model": "{{ process_action_model }}",
                 };
                 execute_ajax(
                     "POST", "/client/modal/action", obj, "global_progress_loader", "{{ model }}"

@@ -1858,6 +1858,12 @@ class tableComponent(CustomComponent):
 
         self.url_action_copy = self.properties.get("copy_url", "")
         self.url_action_remove = self.properties.get("remove_url", "")
+        self.process_action_topic = self.properties.get("process_action_topic", "")
+        self.process_action_model = self.properties.get("process_action_model", "")
+        self.process_action_icon = self.properties.get("process_action_icon", "it-settings")
+        self.process_action_class = self.properties.get("process_action_class", "btn-outline-primary")
+        # alias bool usato dal template come flag di presenza bottone process
+        self.url_action_process = self.process_action_topic
         self.dom_todo = self.properties.get("dom", "iptilp")
         self.show_owner = self.properties.get("show_owner", "no") == "yes"
         self.skip = int(self.properties.get("skip", 0))
@@ -1909,6 +1915,12 @@ class tableComponent(CustomComponent):
                 "defaultContent": ""
             })
             cfg["cols"].append("D")
+        if self.url_action_process:
+            cfg["columns"].append({
+                "data": "process",
+                "defaultContent": ""
+            })
+            cfg["cols"].append("P")
 
         cfg["click_row"] = {"col": self.clickKey}
 
@@ -1950,6 +1962,12 @@ class tableComponent(CustomComponent):
             cfg["url_action_copy"] = self.url_action_copy
         if self.url_action_remove:
             cfg["url_action_remove"] = self.url_action_remove
+        if self.url_action_process:
+            cfg["url_action_process"] = self.url_action_process
+            cfg["process_action_topic"] = self.process_action_topic
+            cfg["process_action_model"] = self.process_action_model
+            cfg["process_action_icon"] = self.process_action_icon
+            cfg["process_action_class"] = self.process_action_class
 
         return cfg
 
@@ -1967,6 +1985,31 @@ class tableComponent(CustomComponent):
         )
         if remove_url and remove_url != self.url_action_remove:
             self.url_action_remove = remove_url
+            changed = True
+        process_action_topic = (
+            self.properties.get("process_action_topic") or new_cfg.get("process_action_topic")
+        )
+        if process_action_topic and process_action_topic != self.process_action_topic:
+            self.process_action_topic = process_action_topic
+            self.url_action_process = process_action_topic
+            changed = True
+        process_action_model = (
+            self.properties.get("process_action_model") or new_cfg.get("process_action_model")
+        )
+        if process_action_model and process_action_model != self.process_action_model:
+            self.process_action_model = process_action_model
+            changed = True
+        process_action_icon = (
+            self.properties.get("process_action_icon") or new_cfg.get("process_action_icon", "it-settings")
+        )
+        if process_action_icon != self.process_action_icon:
+            self.process_action_icon = process_action_icon
+            changed = True
+        process_action_class = (
+            self.properties.get("process_action_class") or new_cfg.get("process_action_class", "btn-outline-primary")
+        )
+        if process_action_class != self.process_action_class:
+            self.process_action_class = process_action_class
             changed = True
         if changed:
             new_cfg = self.make_config_new(

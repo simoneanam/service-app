@@ -15,6 +15,7 @@ from fastapi.responses import (
 
 from core.ExportService import ExportService
 from core.Gateway import Gateway
+from core.ProcessService import ProcessService
 from settings import get_settings, templates
 
 logger = logging.getLogger(__name__)
@@ -132,6 +133,48 @@ async def modal_action(
                     )
                 response = await gateway.complete_json_response(
                     {"link": "#", "reload": True, "status": "ok"}
+                )
+            elif act == "process":
+                # process_topic e process_model arrivano esplicitamente dal
+                # payload JS (proprietà process_action_topic / process_action_model
+                # del componente tabella), senza parsing di URL.
+                process_topic = submitted_data.get("process_topic")
+                process_model_name = submitted_data.get("process_model")
+                # Carica il record raw dal DB (non i valori display-resolved
+                # della riga DataTables, che potrebbero avere label al posto
+                # degli id reali).
+                data = await gateway.get_record_data(model, rec_name)
+                # _id è ObjectId di MongoDB: non JSON-serializable,
+                # Camunda non può gestirlo come variabile di processo.
+                data.pop("_id", None)
+                content_service = await gateway.empty_content_service()
+                process_service = ProcessService.new(
+                    content_service=content_service,
+                    process_model=process_model_name,
+                    process_name="generic_single_task",
+                )
+                # form_data={} è falsy: ProcessServiceCamunda.start() salta
+                # update_instance_vars → handle_save_update_form, evitando
+                # un salvataggio indesiderato del record (qui vogliamo solo
+                # avviare il processo, non modificare il dato).
+                # I campi che update_vars normalmente inietta da form_data
+                # (model, pvars[model]) vengono passati esplicitamente via
+                # extra_vars insieme a target_topic per il dispatcher generico.
+                await process_service.start(
+                    form_data={},
+                    update_data=False,
+                    extra_vars={
+                        "target_topic": process_topic,
+                        "model": model,
+                        model: data,
+                    },
+                )
+                logger.info(
+                    f"modal process topic={process_topic} model={process_model_name} -> "
+                    f"instance={process_service.process_instance_id}"
+                )
+                response = await process_service.check_process_status(
+                    process_service.process_instance_id
                 )
         else:
             if submitted_data.get("url"):
